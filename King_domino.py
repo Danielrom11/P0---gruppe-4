@@ -2,7 +2,7 @@ import cv2 as cv
 import numpy as np
 import os
 
-# Main function containing the backbone of the program
+# Main function containing the backbone of the program 222
 def main():
     print("+-------------------------------+")
     print("| King Domino points calculator |")
