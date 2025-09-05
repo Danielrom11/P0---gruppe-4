@@ -3,6 +3,7 @@ import numpy as np
 import os
 
 # Main function containing the backbone of the program
+
 def main():
     print("+-------------------------------+")
     print("| King Domino points calculator |")
