@@ -7,7 +7,7 @@ def main():
     print("+-------------------------------+")
     print("| King Domino points calculator |")
     print("+-------------------------------+")
-    image_path = r"C:\Users\danie\Downloads\King Domino dataset\50.jpg" # der er brugt jpg nr. 1, 13, 45, 65, 22 og 42 til test af hsv
+    image_path = r"C:\Users\danie\Downloads\King Domino dataset\40.jpg" # der er brugt jpg nr. 1, 13, 45, 65, 22 og 42 til test af hsv
     if not os.path.isfile(image_path):
         print("Image not found")
         return
