@@ -7,7 +7,7 @@ def main():
     print("+-------------------------------+")
     print("| King Domino points calculator |")
     print("+-------------------------------+")
-    image_path = r"C:\Users\danie\Downloads\King Domino dataset\40.jpg" # der er brugt jpg nr. 1, 13, 45, 65, 22 og 42 til test af hsv
+    image_path = r"C:\Users\danie\Downloads\King Domino dataset\10.jpg" # der er brugt jpg nr. 1, 13, 45, 65, 22 og 42 til test af hsv
     if not os.path.isfile(image_path):
         print("Image not found")
         return
@@ -34,20 +34,27 @@ def get_terrain(tile):
     hsv_tile = cv.cvtColor(tile, cv.COLOR_BGR2HSV)
     hue, saturation, value = np.median(hsv_tile, axis=(0,1)) # Consider using median instead of mean
     print(f"H: {hue}, S: {saturation}, V: {value}")
-    if 5 < hue < 45 and 210 < saturation < 275 and 150 < value < 230:
-        return "Field"
-    if 30 < hue < 60 and 70 < saturation < 205 and 30 < value < 75:
-        return "Forest"
-    if 85 < hue < 135 and 200 < saturation < 275 and 125 < value < 190:
-        return "Lake"
-    if 30 < hue < 55 and 150 < saturation < 250 and 110 < value < 165:
+    if 35 < hue < 44 and 199 < saturation < 247 and 74 < value < 158:
         return "Grassland"
-    if 5 < hue < 45 and 35 < saturation < 155 and 75 < value < 145:
-        return "Swamp"
-    if 15 < hue < 35 and 55 < saturation < 130 and 25 < value < 60:
+    
+    if 19 < hue < 334 and 64 < saturation < 119 and 31 < value < 64:
         return "Mine"
-    if 25 < hue < 110 and 35 < saturation < 130 and 40 < value < 100:
+    
+    if 28 < hue < 58 and 83 < saturation < 206 and 34 < value < 63:
+        return "Forest"
+    
+    if 105 < hue < 109 and 240 < saturation < 254 and 117 < value < 184:
+        return "Lake"
+    
+    if 22 < hue < 46 and 232 < saturation < 254 and 135 < value < 201:
+        return "Field"
+    
+    if 18 < hue < 23 and 75 < saturation < 166 and 82 < value < 118:
+        return "Swamp"
+    
+    if 21 < hue < 87 and 41 < saturation < 194 and 59 < value < 120:
         return "Home"
+    
     return "Unknown"
 
 if __name__ == "__main__":
