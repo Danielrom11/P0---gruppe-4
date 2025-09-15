@@ -4,27 +4,28 @@ import os
 import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
 
-# --- Load KNN model and label encoder ---
-# Load your training data (same as in knn_model_til_kd.py)
+# Her indlæser vi træningsdata (samme datasæt som i knn_model_til_kd.py)
+# Datasættet virkede kun ved semikolonspereret csv-fil
 df = pd.read_csv(r'C:\Users\danie\Desktop\python_work\P0---gruppe-4\data_KD.csv', sep=';')
-df['h'] = pd.to_numeric(df['h'], errors='coerce')
-df['s'] = pd.to_numeric(df['s'], errors='coerce')
-df['v'] = pd.to_numeric(df['v'], errors='coerce')
+
+# Vi fjerner de tomme felter
 df.dropna(subset=['h', 's', 'v', 'target'], inplace=True)
+
+# Vi tildeler X og y vores data værdier
 X = df[['h', 's', 'v']].values
 y = df['target'].values
 
-# Fit KNN model
+# Her fitter vi KNN modellen med vores datasæt og sætter k=11, da dette var det bedste valg i knn_model_til_kd.py
 k = 11
 knn_classifier = KNeighborsClassifier(n_neighbors=k)
 knn_classifier.fit(X, y)
 
-# --- Main tile labeling code ---
+# Selve hoveddelen af programmet, hvor den printer de forskellgie info og indlæser et billede
 def main():
     print("+-------------------------------+")
     print("| King Domino points calculator |")
     print("+-------------------------------+")
-    image_path = r"C:\Users\danie\Downloads\King Domino dataset\71.jpg"
+    image_path = r"C:\Users\danie\Downloads\King Domino dataset\57.jpg"
     if not os.path.isfile(image_path):
         print("Image not found")
         return
@@ -36,7 +37,8 @@ def main():
             print(f"Tile ({x}, {y}):")
             print(get_terrain_knn(tile))
             print("=====")
-
+            
+# Her opdeler den billedet i 5x5 felter (100x100 pixels hver)
 def get_tiles(image):
     tiles = []
     for y in range(5):
@@ -45,7 +47,7 @@ def get_tiles(image):
             tiles[-1].append(image[y*100:(y+1)*100, x*100:(x+1)*100])
     return tiles
 
-# Use KNN to determine terrain type
+# Her bruger vi vores KNN model til at forudsige terræntypen baseret på medianværdierne af HSV
 def get_terrain_knn(tile):
     hsv_tile = cv.cvtColor(tile, cv.COLOR_BGR2HSV)
     hue, saturation, value = np.median(hsv_tile, axis=(0,1))

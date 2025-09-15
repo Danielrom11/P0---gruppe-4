@@ -5,23 +5,22 @@ from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-# Load your data
+# Her indlæser vi vores træningsdata
+# Datasættet virkede kun ved semikolonspereret csv-fil
 df = pd.read_csv(r'C:\Users\danie\Desktop\python_work\P0---gruppe-4\data_KD.csv', sep=';')
 
-df['h'] = pd.to_numeric(df['h'], errors='coerce')
-df['s'] = pd.to_numeric(df['s'], errors='coerce')
-df['v'] = pd.to_numeric(df['v'], errors='coerce')
-
-# Drop rows with NaN values after conversion
+# Vi fjerner de tomme felter
 df.dropna(subset=['h', 's', 'v', 'target'], inplace=True)
 
+# Vi tildeler X og y vores data værdier
 X = df[['h', 's', 'v']].values
 y = df['target'].values
 
-# Split data
+# Vi splitter data i trænings- og testdata, vi bruger 20% af data til test og en random state på 10 for reproducerbarhed
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=10)
 
-# KNN model
+# KNN modellen bliver fitter med træningsdata og vi tester den med testdata
+# Vi sætter k=11, da vi har 137 træningspunkter og k bør være √137=11.7
 k = 11
 knn_classifier = KNeighborsClassifier(n_neighbors=k)
 knn_classifier.fit(X_train, y_train)
@@ -29,13 +28,10 @@ y_pred = knn_classifier.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 print(f'Accuracy of k={k}: {accuracy*100:.2f}%')
 
-# ...existing code...
 
 # Encode target labels for plotting
 y_train_encoded, uniques = pd.factorize(y_train)
 y_test_encoded = pd.Categorical(y_test, categories=uniques).codes
-
-# ...existing code...
 
 # 3D Visualization
 fig = plt.figure(dpi=150)
@@ -57,4 +53,3 @@ for i in range(len(X_test)):
 plt.title(f'3D KNN (k={k})')
 plt.legend()
 plt.show()
-# ...existing code...
