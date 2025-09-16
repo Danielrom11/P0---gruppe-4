@@ -2,6 +2,7 @@ import cv2 as cv
 import numpy as np
 import os
 import pandas as pd
+from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 
 # Her indlæser vi træningsdata (samme datasæt som i knn_model_til_kd.py)
@@ -15,10 +16,13 @@ df.dropna(subset=['h', 's', 'v', 'target'], inplace=True)
 X = df[['h', 's', 'v']].values
 y = df['target'].values
 
+# Vi splitter data i trænings- og testdata, vi bruger 20% af data til test og en random state på 10 for reproducerbarhed
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=10)
+
 # Her fitter vi KNN modellen med vores datasæt og sætter k=11, da dette var det bedste valg i knn_model_til_kd.py
 k = 11
 knn_classifier = KNeighborsClassifier(n_neighbors=k)
-knn_classifier.fit(X, y)
+knn_classifier.fit(X_train, y_train)
 
 # Selve hoveddelen af programmet, hvor den printer de forskellgie info og indlæser et billede
 def main():
@@ -37,7 +41,7 @@ def main():
             print(f"Tile ({x}, {y}):")
             print(get_terrain_knn(tile))
             print("=====")
-            
+
 # Her opdeler den billedet i 5x5 felter (100x100 pixels hver)
 def get_tiles(image):
     tiles = []
