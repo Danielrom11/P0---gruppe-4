@@ -4,7 +4,7 @@ import os
 import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
 
-# Her indlæser vi træningsdata (samme datasæt som i knn_model_til_kd.py)
+# Her indlæser vi træningsdata (samme datasæt som i knn_model_train.py)
 # Datasættet virkede kun ved semikolonspereret csv-fil
 df = pd.read_csv(r'C:\Users\danie\Desktop\python_work\P0---gruppe-4\data_KD.csv', sep=';')
 
@@ -15,7 +15,7 @@ df.dropna(subset=['h', 's', 'v', 'target'], inplace=True)
 X = df[['h', 's', 'v']].values
 y = df['target'].values
 
-# Her fitter vi KNN modellen med vores datasæt og sætter k=11, da dette var det bedste valg i knn_model_til_kd.py
+# Her fitter vi KNN modellen med vores datasæt og sætter k=11, da dette var det bedste valg i knn_model_train.py
 k = 11
 knn_classifier = KNeighborsClassifier(n_neighbors=k)
 knn_classifier.fit(X, y)
